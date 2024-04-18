@@ -45,7 +45,7 @@ func (c *ClientManager) authWebSocket(ctx context.Context, ws *websocket.Conn, p
 	if len(buf) > 0 {
 		p.Body = buf
 	}
-	res, err := GRPCClient.Connect(ctx, &logic.ConnectReq{
+	res, err := LogicGrpcClient.Connect(ctx, &logic.ConnectReq{
 		Server: c.serverID,
 		Cookie: cookie,
 		Token:  p.Body,

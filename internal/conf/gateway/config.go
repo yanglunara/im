@@ -1,12 +1,16 @@
 package conf
 
-type Config struct {
-	GrpcClient *GrpcClient
-	Bucket     *Bucket
-	GRPCServer *GRPCServer
-	Consul     *Consul
+var (
+	Conf *Config
+)
 
-	Protocol *Protocol
+type Config struct {
+	GrpcClient      *GrpcClient
+	Bucket          *Bucket
+	GRPCServer      *GRPCServer
+	Consul          *Consul
+	Protocol        *Protocol
+	GracefulTimeout int `json:"gracefulTimeout" yaml:"gracefulTimeout" description:"优雅关闭超时时间" default:"10"`
 }
 
 type GrpcClient struct {

@@ -1,4 +1,4 @@
-package service
+package logic
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"time"
 
 	logicpb "github.com/yanglunara/im/api/logic"
-	"github.com/yanglunara/im/cmd/gateway/conf"
+	conf "github.com/yanglunara/im/internal/conf/logic"
 	"github.com/yanglunara/im/internal/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

@@ -50,7 +50,7 @@ func Init() (err error) {
 }
 
 func Default() *Config {
-	defaultAddr := "0.0.0.0:9000"
+	defaultAddr := ":9000"
 	return &Config{
 		Env: &Env{
 			Region:    region,
@@ -59,14 +59,15 @@ func Default() *Config {
 			Host:      hostName,
 			Weight:    weight,
 		},
-		Grpc: &GrpcServer{
-			Addr:              defaultAddr,
-			Timeout:           5 * time.Second,
-			IdleTimeout:       60 * time.Second,
-			MaxLifeTime:       2 * time.Hour,
+		Grpc: &GRPCServer{
+			Network:           "0.0.0.0",
+			Address:           defaultAddr,
+			Timeout:           60 * time.Second,
+			MaxLiftTime:       5 * time.Second,
+			IdleTimeout:       2 * time.Hour,
 			ForceCloseWait:    20 * time.Second,
-			KeepAliveTimeout:  60 * time.Second,
-			KeepaliveInterval: 20 * time.Second,
+			KeepaliveInterval: 60 * time.Second,
+			KeepaliveTimeout:  20 * time.Second,
 		},
 		// 服务发现与注册
 		Discovery: &Discovery{
@@ -99,14 +100,15 @@ type Discovery struct {
 	Endpoints []string
 }
 
-type GrpcServer struct {
-	Addr              string        // gRPC 服务器的地址
-	Timeout           time.Duration // 请求超时时间
-	IdleTimeout       time.Duration // 空闲连接超时时间
-	MaxLifeTime       time.Duration // 连接的最大生命周期
-	ForceCloseWait    time.Duration // 强制关闭连接前的等待时间
-	KeepAliveTimeout  time.Duration // KeepAlive 检测的超时时间
-	KeepaliveInterval time.Duration // KeepAlive 检测的间隔时间
+type GRPCServer struct {
+	Network           string        `json:"network"`
+	Address           string        `json:"address"`
+	Timeout           time.Duration `json:"timeout"`
+	MaxLiftTime       time.Duration `json:"maxLifeTime"`
+	IdleTimeout       time.Duration `json:"idleTimeout"`
+	ForceCloseWait    time.Duration `json:"forceCloseWait"`
+	KeepaliveInterval time.Duration `json:"keepaliveInterval"`
+	KeepaliveTimeout  time.Duration `json:"keepaliveTimeout"`
 }
 
 type Env struct {
@@ -121,7 +123,7 @@ type Config struct {
 	Redis      *Redis
 	Node       *Node
 	Env        *Env
-	Grpc       *GrpcServer
+	Grpc       *GRPCServer
 	Consul     *Consul
 	Discovery  *Discovery
 	Backoff    *Backoff
