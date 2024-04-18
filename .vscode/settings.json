@@ -1,7 +1,0 @@
-{
-    "go.testFlags": [
-        "-count=1",
-        "-v",
-        "-timeout=600s"
-    ]
-}
