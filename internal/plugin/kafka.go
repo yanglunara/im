@@ -2,7 +2,7 @@ package plugin
 
 import (
 	kafka "github.com/IBM/sarama"
-	"github.com/yanglunara/im/cmd/logic/conf"
+	conf "github.com/yanglunara/im/internal/conf/logic"
 	"github.com/yanglunara/im/internal/model"
 )
 

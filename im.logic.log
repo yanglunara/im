@@ -1,0 +1,22 @@
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:28:02.206+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:28:12.238+0800","caller":"logic/main.go:89","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:20.315+0800","caller":"logic/main.go:115","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:20.316+0800","caller":"logic/main.go:96","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:23.812+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:33.824+0800","caller":"logic/main.go:89","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:35.194+0800","caller":"logic/main.go:115","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:29:35.194+0800","caller":"logic/main.go:96","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:30:23.527+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[31mFATAL\u001b[0m","time":"2024-04-20T21:30:33.528+0800","caller":"logic/main.go:73","msg":"rpc server start :%s \n","error":"listen tcp :8110: bind: address already in use"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:30:56.637+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[31mFATAL\u001b[0m","time":"2024-04-20T21:31:06.638+0800","caller":"logic/main.go:73","msg":"rpc server start :%s \n","error":"listen tcp :8110: bind: address already in use"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:32:39.027+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[31mFATAL\u001b[0m","time":"2024-04-20T21:32:49.028+0800","caller":"logic/main.go:73","msg":"rpc server start :%s \n","error":"listen tcp :8110: bind: address already in use"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:33:46.570+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[31mFATAL\u001b[0m","time":"2024-04-20T21:33:56.571+0800","caller":"logic/main.go:73","msg":"rpc server start :%s \n","error":"listen tcp :8119: bind: address already in use"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:45:36.304+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:45:36.321+0800","caller":"logic/main.go:90","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:46:26.419+0800","caller":"logic/main.go:119","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:46:26.419+0800","caller":"logic/main.go:97","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:47:35.206+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:47:35.223+0800","caller":"logic/main.go:90","msg":"Register Service Success"}

@@ -1,0 +1,14 @@
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:37:13.261+0800","caller":"logger/zap.go:59","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:37:13.288+0800","caller":"gateway/main.go:139","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:38:45.638+0800","caller":"gateway/main.go:172","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:38:45.639+0800","caller":"gateway/main.go:153","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:44:58.591+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:44:58.619+0800","caller":"gateway/main.go:139","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:10.024+0800","caller":"gateway/main.go:172","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:10.024+0800","caller":"gateway/main.go:153","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:33.553+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:33.579+0800","caller":"gateway/main.go:139","msg":"Register Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:37.024+0800","caller":"gateway/main.go:172","msg":"Shutdown Server ..."}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T19:45:37.024+0800","caller":"gateway/main.go:153","msg":"Grpc Service Success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:47:22.748+0800","caller":"logger/zap.go:64","msg":"init logger success"}
+{"level":"\u001b[34mINFO\u001b[0m","time":"2024-04-20T21:47:22.778+0800","caller":"gateway/main.go:139","msg":"Register Service Success"}

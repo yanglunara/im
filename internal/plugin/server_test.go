@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yanglunara/im/cmd/logic/conf"
+	conf "github.com/yanglunara/im/internal/conf/logic"
 )
 
 func TestMain(m *testing.M) {

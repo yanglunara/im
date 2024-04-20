@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/yanglunara/im/api/logic"
-	"github.com/yanglunara/im/cmd/logic/conf"
+	conf "github.com/yanglunara/im/internal/conf/logic"
 	"github.com/yanglunara/im/internal/model"
 	"github.com/yanglunara/im/internal/plugin"
 )
@@ -48,9 +48,11 @@ func NewLogic(c *conf.Config) model.LogicConnService {
 		c:         c,
 		server:    server,
 		roomCount: make(map[string]int32),
-		replicant: newReplicant("host.docker.internal:8500", "logic.grpc"),
 	}
 	return cl
+}
+func (l *connLogic) SetReplicant(_ context.Context, serverName string) {
+	l.replicant = newReplicant(conf.Conf.Consul.Address, serverName)
 }
 
 func (l *connLogic) Connect(ctx context.Context, req *logic.ConnectReq) (resp *logic.ConnectResp, err error) {

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/gomodule/redigo/redis"
-	"github.com/yanglunara/im/cmd/logic/conf"
+	conf "github.com/yanglunara/im/internal/conf/logic"
 	"github.com/yanglunara/im/internal/model"
 	"github.com/zhenjl/cityhash"
 )

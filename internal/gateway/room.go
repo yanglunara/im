@@ -2,8 +2,6 @@ package gateway
 
 import (
 	"sync"
-
-	pb "github.com/yanglunara/im/api/protocol"
 )
 
 type Room struct {
@@ -24,7 +22,7 @@ func NewRoom(id string) *Room {
 	}
 }
 
-func (r *Room) Push(p *pb.Proto) {
+func (r *Room) Push(p *ProtoRing) {
 	r.rLock.RLock()
 	defer r.rLock.RUnlock()
 	for c := r.next; c != nil; c = c.Next {

@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/url"
 	"sort"
 	"strconv"
@@ -121,12 +120,10 @@ func (r *replicant) LoadBalancerUpdate(ins []*register.ServiceInstance) {
 		} else {
 			meta := in.Metadata
 			weight, err := strconv.ParseInt(meta["weight"], 10, 32)
-			fmt.Printf("weight:%v err:%v metadata:%v \n", weight, err, in.Metadata)
 			if err != nil {
 				continue
 			}
 			conns, err := strconv.ParseInt(meta["connCount"], 10, 32)
-			fmt.Printf("connCount:%v\n", conns)
 			if err != nil {
 				continue
 			}
@@ -156,7 +153,6 @@ func (r *replicant) LoadBalancerUpdate(ins []*register.ServiceInstance) {
 	r.nodes = nodes
 	r.totalConns = totalConns
 	r.totalWeight = totalWeight
-	fmt.Printf("LoadBalancerUpdate:%v\n", r.nodes)
 }
 
 func (r *replicant) OnlineProc(ctx context.Context) {

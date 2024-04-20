@@ -34,7 +34,7 @@ func NewServer(ctx context.Context, c *conf.Config, serverID string) *GatewaySer
 	gs.buckets = make([]*Bucket, c.Bucket.Size)
 	gs.bucketIdx = uint32(c.Bucket.Size)
 	for i := 0; i < c.Bucket.Size; i++ {
-		gs.buckets[i] = NewBucket(c.Bucket)
+		gs.buckets[i] = NewBucket(&c.Bucket)
 	}
 	// 启动申报当前链接
 	go gs.runProc(ctx)

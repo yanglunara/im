@@ -10,32 +10,42 @@ import (
 )
 
 var (
-	ProtoRead   = &pb.Proto{Op: int32(pb.Operation_ProtoReady)}
-	ProtoFinish = &pb.Proto{Op: int32(pb.Operation_ProtoFinish)}
+	ProtoRead   = &ProtoRing{Proto: &pb.Proto{Op: int32(pb.Operation_ProtoReady)}}
+	ProtoFinish = &ProtoRing{Proto: &pb.Proto{Op: int32(pb.Operation_ProtoFinish)}}
 )
 
 type Channel struct {
 	Room     *Room
 	CliProto Ring
-	signal   chan *pb.Proto
+	signal   chan *ProtoRing
 	Writer   bufio.Writer
 	Reader   bufio.Reader
 	Next     *Channel
 	Prev     *Channel
 
-	Mid      int64
-	Key      string
-	IP       string
-	watchOps map[int32]struct{}
-	mutex    sync.RWMutex
+	Mid       int64
+	Key       string
+	IP        string
+	watchOps  map[int32]struct{}
+	mutex     sync.RWMutex
+	ProtoRing *ProtoRing
+	LastHB    time.Time
 }
 
 func NewChannel(cli, srv int) *Channel {
 	c := new(Channel)
 	c.CliProto.Init(cli)
-	c.signal = make(chan *pb.Proto, srv)
+	c.signal = make(chan *ProtoRing, srv)
 	c.watchOps = make(map[int32]struct{})
 	return c
+}
+
+func (c *Channel) SetLastHB() {
+	c.LastHB = time.Now()
+}
+
+func (c *Channel) SetProtoRing(pb *ProtoRing) {
+	c.ProtoRing = pb
 }
 
 // Watch 监听
@@ -64,13 +74,17 @@ func (c *Channel) NeedPush(op int32) bool {
 	return false
 }
 
-func (c *Channel) Push(p *pb.Proto) (err error) {
+func (c *Channel) Push(p *ProtoRing) (err error) {
 	select {
 	case c.signal <- p:
 	case <-time.After(time.Second): // 添加超时机制
 		err = errors.New("signal channel full, msg dropped")
 	}
 	return
+}
+
+func (c *Channel) Ready() *ProtoRing {
+	return <-c.signal
 }
 
 func (c *Channel) Signal() {

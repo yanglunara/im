@@ -1,0 +1,47 @@
+Logger:
+  Level: "debug"   ## 日志等级
+  FileName: "im.gateway.log"  # 日志文件位置
+  MaxSize: 200    # 日志文件最大大小(MB)
+  MaxAge: 30      # 保留旧日志文件的最大天数
+  MaxBackups: 7   # 最大保留日志个数
+  ServerName: "im.gateway"  # 服务名
+
+
+GrpcClient:
+  Addr: "im.logic"
+  Timeout: 5s
+
+Bucket:
+  Size: 32
+  Channel: 1024
+  Room: 1024
+  RoutineAmount: 32
+  RoutineSize: 1024
+
+GrpcServer:
+  Network: "tcp"
+  Addr: ":8109"
+  Timeout: 10s
+
+
+HTTPServer:
+   Name: "im.gateway"
+   Network: "tcp"
+   Host: "127.0.0.1"
+   Port: 8001
+   GracefulTimeout: 10s    
+
+Consul:
+  Address: host.docker.internal:8500
+
+Protocol:
+  SvrProto: 10
+  CliProto: 5
+
+
+GlobalEnv:
+  Region: "sh"
+  Zone: "sh001"
+  DeployEnv: "dev"
+  Host: "localhost"
+  Weight: 10

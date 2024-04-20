@@ -1,91 +1,21 @@
 package conf
 
 import (
-	"sync"
 	"time"
 
-	"github.com/BurntSushi/toml"
+	conf "github.com/yanglunara/im/internal/conf"
+	"github.com/yunbaifan/pkg/logger"
 )
 
 var (
-	once     sync.Once
-	Conf     *Config
-	path     string
-	region   string
-	zone     string
-	env      string
-	hostName string
-	weight   int64
-	name     string
+	Conf *Config
 )
 
-func init() {
-	// var (
-	// 	hostName, _ = os.Hostname()                                 // 获取主机名
-	// 	weight, _   = strconv.ParseInt(os.Getenv("WEIGHT"), 10, 32) // 从环境变量中获取权重，并将其转换为 int64
-	// )
-	// // 使用 flag 包来解析命令行参数。这些参数可以用来覆盖默认的配置值。
-	// // 配置文件路径
-	// flag.StringVar(&path, "conf", "config.toml", "config file path")
-	// // 区域名称
-	// flag.StringVar(&region, "region", "local", "region name")
-	// // 区域名称
-	// flag.StringVar(&zone, "zone", "local", "zone name")
-	// // 环境名称
-	// flag.StringVar(&env, "env", "dev", "env name")
-	// // 主机名
-	// flag.StringVar(&hostName, "host", hostName, "host name")
-	// // 区域权重
-	// flag.Int64Var(&weight, "weight", weight, "region weight")
-	// // 解析命令行参数
-	// flag.Parse()
-}
-
-func Init() (err error) {
-	once.Do(func() {
-		Conf = Default()
-		_, err = toml.DecodeFile(path, &Conf)
-	})
-	return
-}
-
-func Default() *Config {
-	defaultAddr := ":9000"
-	return &Config{
-		Env: &Env{
-			Region:    region,
-			Zone:      zone,
-			DeployEnv: env,
-			Host:      hostName,
-			Weight:    weight,
-		},
-		Grpc: &GRPCServer{
-			Network:           "0.0.0.0",
-			Address:           defaultAddr,
-			Timeout:           60 * time.Second,
-			MaxLiftTime:       5 * time.Second,
-			IdleTimeout:       2 * time.Hour,
-			ForceCloseWait:    20 * time.Second,
-			KeepaliveInterval: 60 * time.Second,
-			KeepaliveTimeout:  20 * time.Second,
-		},
-		// 服务发现与注册
-		Discovery: &Discovery{
-			ID:        hostName,
-			Name:      name,
-			Metadata:  make(map[string]string),
-			Endpoints: []string{defaultAddr},
-		},
-		Consul: &Consul{
-			Address: "127.0.0.1:8500",
-		},
-		Backoff: &Backoff{
-			MaxDelay:  300,
-			BaseDelay: 3,
-			Factor:    1.8,
-			Jitter:    1.3,
-		},
+func Init(filePath string) error {
+	if err := conf.Binding(&Conf, filePath); err != nil {
+		return err
 	}
+	return nil
 }
 
 type Consul struct {
@@ -100,34 +30,28 @@ type Discovery struct {
 	Endpoints []string
 }
 
-type GRPCServer struct {
-	Network           string        `json:"network"`
-	Address           string        `json:"address"`
-	Timeout           time.Duration `json:"timeout"`
-	MaxLiftTime       time.Duration `json:"maxLifeTime"`
-	IdleTimeout       time.Duration `json:"idleTimeout"`
-	ForceCloseWait    time.Duration `json:"forceCloseWait"`
-	KeepaliveInterval time.Duration `json:"keepaliveInterval"`
-	KeepaliveTimeout  time.Duration `json:"keepaliveTimeout"`
+type GrpcServer struct {
+	Network string        `json:"network" yaml:"network" description:"网络" default:"grpc"`
+	Addr    string        `json:"addr" yaml:"addr" description:"服务地址" default:"0.0.0.0:9002"`
+	Timeout time.Duration `json:"timeout" yaml:"timeout" description:"超时时间" default:"10s"`
 }
 
-type Env struct {
-	Region    string
-	Zone      string
-	DeployEnv string
-	Host      string
-	Weight    int64
+type GlobalEnv struct {
+	Region    string `yaml:"region" description:"区域" default:"sh"`
+	Zone      string `yaml:"zone" description:"可用区" default:"sh001"`
+	DeployEnv string `yaml:"deployEnv" description:"部署环境" default:"dev"`
+	Host      string `yaml:"host" description:"主机名" default:"localhost"`
+	Weight    int64  `yaml:"weight" description:"权重" default:"10"`
 }
 type Config struct {
-	Kafka      *Kafka
-	Redis      *Redis
-	Node       *Node
-	Env        *Env
-	Grpc       *GRPCServer
-	Consul     *Consul
-	Discovery  *Discovery
-	Backoff    *Backoff
-	GrpcClient *GrpcClient
+	Logger     logger.LogConfig    `yaml:"logger"`
+	GrpcServer GrpcServer          `yaml:"grpcServer" description:"grpc服务"`
+	Consul     Consul              `yaml:"consul" description:"consul配置"`
+	Kafka      Kafka               `yaml:"kafka" description:"kafka配置"`
+	Redis      Redis               `yaml:"redis" description:"redis配置"`
+	GlobalEnv  GlobalEnv           `yaml:"globalEnv" description:"全局环境"`
+	Regions    map[string][]string `yaml:"regions" description:"区域配置"`
+	Node       Node                `yaml:"nodes" description:"节点配置"`
 }
 
 type Kafka struct {
@@ -164,9 +88,4 @@ type Backoff struct {
 	BaseDelay int32
 	Factor    float64
 	Jitter    float64
-}
-
-type GrpcClient struct {
-	Addr    string // gRPC 服务器的地址
-	Timeout int64
 }

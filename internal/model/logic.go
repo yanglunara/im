@@ -14,4 +14,5 @@ type LogicConnService interface {
 	Receive(ctx context.Context, req *logic.ReceiveReq) (*logic.ReceiveResp, error)
 	Nodes(ctx context.Context, req *logic.NodesReq) (*logic.NodesResp, error)
 	Ping(ctx context.Context) error
+	SetReplicant(ctx context.Context, serverName string)
 }

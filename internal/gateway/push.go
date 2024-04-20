@@ -14,7 +14,7 @@ var (
 type pushService struct {
 }
 
-func NewPushService() model.GatewayPushService {
+func NewGatewayService() model.GatewayPushService {
 	return &pushService{}
 }
 
