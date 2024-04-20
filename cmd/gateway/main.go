@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
-	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -189,15 +188,11 @@ func gracefulShutdown(ctx context.Context, port int32, rpcSrv *bgrpc.Service, gi
 	if len(uri.Host) > 0 {
 		localIP = strings.Split(uri.Host, ":")[0]
 	}
-	addrs := []string{uri.Host}
 	instance := &register.ServiceInstance{
-		ID:     ServerID,
-		Name:   ServerName,
-		LastTs: time.Now().Unix(),
-		Metadata: map[string]string{
-			"weight": strconv.Itoa(int(conf.Conf.GlobalEnv.Weight)),
-			"addrs":  strings.Join(addrs, ","),
-		},
+		ID:       ServerID,
+		Name:     ServerName,
+		LastTs:   time.Now().Unix(),
+		Metadata: map[string]string{},
 		Endpoints: []string{
 			fmt.Sprintf("%s://%s", uri.Scheme, uri.Host),
 			fmt.Sprintf("%s://%s:%d", "http", localIP, conf.Conf.HTTPServer.Port),
