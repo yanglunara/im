@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"time"
 
 	"github.com/yanglunara/im/api/gateway"
 )
@@ -12,3 +13,8 @@ type GatewayPushService interface {
 	BroadcastRoom(ctx context.Context, req *gateway.BroadcastRoomReq) (*gateway.BroadcastRoomResp, error)
 	Rooms(ctx context.Context, req *gateway.RoomsReq) (*gateway.RoomsResp, error)
 }
+
+var (
+	MinServerHeartbeat = time.Minute * 10
+	MaxServerHeartbeat = time.Minute * 30
+)

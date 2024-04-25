@@ -59,6 +59,7 @@ func TestAddServerOnline(t *testing.T) {
 
 	rs, err := Servrice.GetRedis().ServerOnline(c, m.Server)
 	assert.Nil(t, err)
+	t.Logf("rs: %+v", rs)
 	assert.Equal(t, m.Online.RoomCount["room"], rs.RoomCount["room"])
 
 	err = Servrice.GetRedis().DelServerOnline(c, m.Server)

@@ -9,7 +9,6 @@ import (
 	"github.com/yanglunara/discovery/register"
 	"google.golang.org/grpc"
 	grpcinsecure "google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/keepalive"
 )
 
 type (
@@ -31,7 +30,7 @@ func WithOptions(opts ...grpc.DialOption) ClientOption {
 }
 func WithEendpoint(endpoint string) ClientOption {
 	return func(o *grpcConnService) {
-		o.endpoint = endpoint
+		o.endpoint = fmt.Sprintf("discovery:///%s", endpoint)
 	}
 }
 
@@ -82,11 +81,11 @@ func (g *grpcConnService) dial(ctx context.Context, insecure bool) (*grpc.Client
 		grpc.WithInitialConnWindowSize(g.WindowSize),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(int(g.WindowSize))),
 		grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(int(g.WindowSize))),
-		grpc.WithKeepaliveParams(keepalive.ClientParameters{
-			Time:                g.aliveTime,
-			Timeout:             g.timeout,
-			PermitWithoutStream: true,
-		}),
+		//grpc.WithKeepaliveParams(keepalive.ClientParameters{
+		//	Time:                g.aliveTime,
+		//	Timeout:             g.timeout,
+		//	PermitWithoutStream: true,
+		//}),
 	}
 	if insecure {
 		grpcOpts = append(grpcOpts, grpc.WithTransportCredentials(grpcinsecure.NewCredentials()))

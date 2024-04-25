@@ -7,50 +7,49 @@ package im.protocol;
 option go_package = "./api/protocol;protocol";
 
 
+enum Op {
+    //Handshake 握手
+    Handshake = 0;
+    //HandshakeResp 握手应答
+    HandshakeResp = 1;
+    //Heartbeat 心跳
+    Heartbeat = 2;
+    //HeartbeatResp 心跳回复
+    HeartbeatResp = 3;
+    //SendMsg 发送消息
+    SendMsg = 4;
+    // SendMsgResp 发送消息回复
+    SendMsgResp  = 5;
+    // DisconnectResp 断开连接回复
+    DisconnectResp = 6;
+    //Auth 授权连接
+    Auth = 7;
+    // AuthResp 授权连接回复
+    AuthResp = 8;
+    // Raw 原始消息
+    Raw = 9;
+    //ProtoReady 协议准备就绪
+    ProtoReady = 10; 
+    //ProtoFinish 协议完成   
+    ProtoFinish = 11;
+    // ChangeRoom 更换房间
+    ChangeRoom = 12;
+    // ChangeRoomResp 更换房间回复
+    ChangeRoomResp = 13;
+    // Sub 订阅
+    Sub = 14;
+    //SubReply 订阅操作回复
+    SubReply = 15;
+    // Unsub 取消订阅操作
+    Unsub  = 16;
+    // UnsubReply 取消订阅操作回复
+    UnsubResp  = 17;
+}
+
 message Proto {
     int32 ver = 1;
-    int32 op = 2;
+    Op op = 2;
     int32 seq = 3;
     bytes body = 4;
 }
 
-message Operation{
-    enum Type {
-        //Handshake 握手
-        Handshake = 0;
-        //HandshakeResp 握手应答
-        HandshakeResp = 1;
-        //Heartbeat 心跳
-        Heartbeat = 2;
-        //HeartbeatResp 心跳回复
-        HeartbeatResp = 3;
-        //SendMsg 发送消息
-        SendMsg = 4;
-        // SendMsgResp 发送消息回复
-        SendMsgResp  = 5;
-        // DisconnectResp 断开连接回复
-        DisconnectResp = 6;
-        //Auth 授权连接
-        Auth = 7;
-        // AuthResp 授权连接回复
-        AuthResp = 8;
-        // Raw 原始消息
-        Raw = 9;
-        //ProtoReady 协议准备就绪
-        ProtoReady = 10; 
-        //ProtoFinish 协议完成   
-        ProtoFinish = 11;
-        // ChangeRoom 更换房间
-        ChangeRoom = 12;
-        // ChangeRoomResp 更换房间回复
-        ChangeRoomResp = 13;
-        // Sub 订阅
-        Sub = 14;
-        //SubReply 订阅操作回复
-        SubReply = 15;
-        // Unsub 取消订阅操作
-        Unsub  = 16;
-        // UnsubReply 取消订阅操作回复
-        UnsubResp  = 17;
-    }
-}

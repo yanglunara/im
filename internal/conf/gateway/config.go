@@ -24,10 +24,11 @@ type Config struct {
 	GrpcClient GrpcClient       `yaml:"grpcClient" description:"grpc客户端"`
 	Bucket     Bucket           `yaml:"bucket" description:"桶配置"`
 	GrpcServer GrpcServer       `yaml:"grpcServer" description:"grpc服务"`
-	HTTPServer HTTPServer       `yaml:"httpServer" description:"http服务"`
 	Consul     Consul           `yaml:"consul" description:"consul配置"`
 	Protocol   Protocol         `yaml:"protocol" description:"协议配置"`
 	GlobalEnv  GlobalEnv        `yaml:"globalEnv" description:"全局环境"`
+	Websocket  Websocket        `yaml:"websocket" description:"tcp配置"`
+	TCP        TCP              `yaml:"tcp" description:"tcp配置"`
 }
 
 type GrpcClient struct {
@@ -63,8 +64,11 @@ type Consul struct {
 }
 
 type Protocol struct {
-	SvrProto int `json:"svrProto" yaml:"svrProto" description:"服务协议" default:"10"`
-	CliProto int `json:"cliProto" yaml:"cliProto" description:"客户端协议" default:"5"`
+	SvrProto         int           `json:"svrProto" yaml:"svrProto" description:"服务协议" default:"10"`
+	CliProto         int           `json:"cliProto" yaml:"cliProto" description:"客户端协议" default:"5"`
+	Timer            int           `json:"timer" yaml:"timer" description:"定时器" default:"10"`
+	TimerSize        int           `json:"timerSize" yaml:"timerSize" description:"定时器大小" default:"1024"`
+	HandShakeTimeout time.Duration `json:"handShakeTimeout" yaml:"handShakeTimeout" description:"握手超时时间" default:"10s"`
 }
 
 type GlobalEnv struct {
@@ -74,4 +78,25 @@ type GlobalEnv struct {
 	Host      string   `yaml:"host" description:"主机名" default:"localhost"`
 	Weight    int64    `yaml:"weight" description:"权重" default:"10"`
 	Addrs     []string `yaml:"addrs" description:"服务地址" default:"localhost"`
+}
+
+type Websocket struct {
+	Bind        []string `yaml:"bind" description:"绑定地址"`
+	TLSOpen     bool     `yaml:"tlsOpen" description:"是否开启tls" default:"false"`
+	TLSBind     []string `yaml:"tlsBind" description:"tls绑定地址" default:"localhost"`
+	CertFile    string   `yaml:"certFile" description:"证书文件"`
+	PrivateFile string   `yaml:"privateFile" description:"私钥文件"`
+}
+
+type TCP struct {
+	Bind         []string `yaml:"bind" description:"绑定地址"`
+	Sendbuf      int      `yaml:"sendbuf" description:"发送缓冲区"`
+	Recvbuf      int      `yaml:"recvbuf" description:"接收缓冲区"`
+	KeepAlive    bool     `yaml:"keepAlive" description:"保持连接"`
+	Reader       int      `yaml:"reader" description:"读取协程数量"`
+	ReadBuf      int      `yaml:"readBuf" description:"读取缓冲区"`
+	ReadBufSize  int      `yaml:"readBufSize" description:"读取缓冲区大小" default:"1024"`
+	Writer       int      `yaml:"writer" description:"写入协程数量" default:"32`
+	WriteBuf     int      `yaml:"writeBuf" description:"写入缓冲区" default:"1024`
+	WriteBufSize int      `yaml:"writeBufSize" description:"写入缓冲区大小" default:"1024`
 }

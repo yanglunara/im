@@ -1,5 +1,4 @@
 github.com/BurntSushi/toml v1.3.2 h1:o7IhLm0Msx3BaB+n3Ag7L8EVlByGnpq14C4YWiu/gL8=
-github.com/BurntSushi/toml v1.3.2/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/IBM/sarama v1.43.1 h1:Z5uz65Px7f4DhI/jQqEm/tV9t8aU+JUdTyW/K/fCXpA=
 github.com/IBM/sarama v1.43.1/go.mod h1:GG5q1RURtDNPz8xxJs3mgX6Ytak8Z9eLhAkJPObe2xE=
@@ -281,13 +280,15 @@ github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.11 h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4dU=
 github.com/ugorji/go/codec v1.2.11/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
-github.com/yanglunara/discovery v0.1.11 h1:/WHhpi0dkzQarNwdmceHReTtvHyKqnLo7bw3EemvPvQ=
-github.com/yanglunara/discovery v0.1.11/go.mod h1:uLiwX2t1X6ITGeMcgV7gpqeNdsgrSmXvKKEOqSATNoI=
+github.com/yanglunara/discovery v0.1.13 h1:c5CLNoygvk5pPlIpTrV3f/dWQmdDlhGTB8w8cIY+Q58=
+github.com/yanglunara/discovery v0.1.13/go.mod h1:uLiwX2t1X6ITGeMcgV7gpqeNdsgrSmXvKKEOqSATNoI=
+github.com/yanglunara/discovery v0.1.14 h1:5MFf9OGBLjIbmut7QSFreunmqJubsXnOZedqfTBq0fk=
+github.com/yanglunara/discovery v0.1.14/go.mod h1:uLiwX2t1X6ITGeMcgV7gpqeNdsgrSmXvKKEOqSATNoI=
+github.com/yanglunara/discovery v0.1.15 h1:VQW328TeWIsvP+oTToEzDuknCl5+MJx2hbZhw+uL98M=
+github.com/yanglunara/discovery v0.1.15/go.mod h1:uLiwX2t1X6ITGeMcgV7gpqeNdsgrSmXvKKEOqSATNoI=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
-github.com/yunbaifan/pkg v0.0.8 h1:O9vgJlwomlD5ubKcjFfTiEck5Fv5tmNE6js8ItK+k2M=
-github.com/yunbaifan/pkg v0.0.8/go.mod h1:CyuyQaLyC2vGowYyUnCuSxzB8fmimIIuOvi3kmKZULU=
 github.com/yunbaifan/pkg v0.0.9 h1:HOkm5fEVZgf0ITNwGLIGXY/ZcEgNTjKSRdo95iCwGAw=
 github.com/yunbaifan/pkg v0.0.9/go.mod h1:Ad63MEEYbJphiKiSn7R1D3PWLfK873wrDTbo6w85N1c=
 github.com/zhenjl/cityhash v0.0.0-20131128155616-cdd6a94144ab h1:BWHvAOZz0pBILkGl/ebPQKZDrqbaWj/iN9RE8AvaTvg=

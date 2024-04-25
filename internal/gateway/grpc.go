@@ -4,6 +4,8 @@ import (
 	"context"
 	"sync"
 
+	"google.golang.org/grpc"
+
 	"github.com/yanglunara/discovery/recovery"
 	bgrpc "github.com/yanglunara/discovery/transport/grpc"
 	gatewaypb "github.com/yanglunara/im/api/gateway"
@@ -22,6 +24,10 @@ var (
 	_ gatewaypb.GatewayServer = (*gatewayPushServer)(nil)
 )
 
+var (
+	Clients = make(map[string]*grpc.ClientConn)
+)
+
 type gatewayPushServer struct {
 	gatewaypb.UnimplementedGatewayServer
 	gps model.GatewayPushService
@@ -37,6 +43,7 @@ func NewLogicGrpc(ctx context.Context, c *conf.Config) logic.LogicClient {
 		if err != nil {
 			panic(err)
 		}
+		Clients[c.GrpcClient.Addr] = client
 		LogicGrpcClient = logic.NewLogicClient(client)
 	})
 	return LogicGrpcClient

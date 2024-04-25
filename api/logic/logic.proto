@@ -7,6 +7,8 @@ option go_package = "./api/logic;logic";
 
 import "third_party/validate/validate.proto";
 
+import "api/protocol/protocol.proto";
+
 message PushMessage {
     enum Type{
         Push = 0;
@@ -70,17 +72,11 @@ message OnlineResp {
     map<string, int32> allRoomCount = 1;
 }
 
-message Proto {
-    int32 ver = 1;
-    int32 op = 2;
-    int32 seq = 3;
-    bytes body = 4;
-}
 
 
 message ReceiveReq {
     int64 mid = 1;
-    Proto proto = 2;
+    im.protocol.Proto proto = 2;
 }
 
 message ReceiveResp{

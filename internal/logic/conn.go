@@ -52,7 +52,7 @@ func NewLogic(c *conf.Config) model.LogicConnService {
 	return cl
 }
 func (l *connLogic) SetReplicant(_ context.Context, serverName string) {
-	l.replicant = newReplicant(conf.Conf.Consul.Address, serverName)
+	l.replicant = newReplicant(l.server, conf.Conf.Consul.Address, serverName)
 }
 
 func (l *connLogic) Connect(ctx context.Context, req *logic.ConnectReq) (resp *logic.ConnectResp, err error) {
@@ -136,7 +136,7 @@ func (l *connLogic) RenewOnline(ctx context.Context, req *logic.OnlineReq) (*log
 		return nil, err
 	}
 	return &logic.OnlineResp{
-		AllRoomCount: l.roomCount,
+		AllRoomCount: l.replicant.GetRoomCount(),
 	}, nil
 }
 func (l *connLogic) Receive(ctx context.Context, req *logic.ReceiveReq) (*logic.ReceiveResp, error) {

@@ -3,7 +3,6 @@ module github.com/yanglunara/im
 go 1.20
 
 require (
-	github.com/BurntSushi/toml v1.3.2
 	github.com/IBM/sarama v1.43.1
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/fsnotify/fsnotify v1.7.0
@@ -15,7 +14,7 @@ require (
 	github.com/hashicorp/consul/api v1.28.2
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
-	github.com/yanglunara/discovery v0.1.11
+	github.com/yanglunara/discovery v0.1.15
 	github.com/yunbaifan/pkg v0.0.9
 	github.com/zhenjl/cityhash v0.0.0-20131128155616-cdd6a94144ab
 	go.uber.org/zap v1.27.0

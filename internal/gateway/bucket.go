@@ -6,6 +6,7 @@ import (
 	"sync/atomic"
 
 	pb "github.com/yanglunara/im/api/gateway"
+	"github.com/yanglunara/im/api/protocol"
 	conf "github.com/yanglunara/im/internal/conf/gateway"
 )
 
@@ -161,7 +162,7 @@ func (b *Bucket) Channel(key string) (ch *Channel) {
 }
 
 // Broadcast 广播
-func (b *Bucket) Broadcast(p *ProtoRing, op int32) {
+func (b *Bucket) Broadcast(p *protocol.Proto, op int32) {
 	b.cLock.RLock()
 	defer b.cLock.RUnlock()
 	for _, ch := range b.channels {
@@ -222,7 +223,6 @@ func (b *Bucket) UpRoomsCount(rcMap map[string]int32) {
 	for roomID, room := range b.rooms {
 		room.AllOnline = rcMap[roomID]
 	}
-	b.cLock.RUnlock()
 }
 
 // roomProc 房间处理协程
@@ -231,7 +231,7 @@ func (b *Bucket) roomProc(c chan *pb.BroadcastRoomReq) {
 		if arg, ok := <-c; ok { // 从通道中获取广播房间请求
 			if room := b.Room(arg.RoomID); room != nil { // 如果房间存在
 				// 创建一个新的 ProtoRing
-				room.Push(&ProtoRing{Proto: arg.Proto}) // 推送协议
+				room.Push(arg.Proto) // 推送协议
 			}
 		}
 	}

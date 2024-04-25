@@ -28,7 +28,7 @@ Kafka:
 
 Redis:
   Network: "tcp"
-  Addr: "127.0.0.1:6379"
+  Addr: "127.0.0.1:26379"
   Active: 60000
   Idle: 1024
   DialTimeout: 200ms

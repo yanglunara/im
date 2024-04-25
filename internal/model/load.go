@@ -10,4 +10,5 @@ type Replicant interface {
 	LoadBalancerUpdate(ins []*register.ServiceInstance)
 	OnlineProc(ctx context.Context)
 	NodeAddrs(region, domain string, regionWeight float64) (domains, addrs []string)
+	GetRoomCount() map[string]int32
 }

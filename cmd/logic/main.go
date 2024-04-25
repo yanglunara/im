@@ -10,7 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
 	"github.com/yanglunara/discovery/register"
 	bgrpc "github.com/yanglunara/discovery/transport/grpc"
@@ -24,7 +23,7 @@ import (
 
 var (
 	// Version is the version of the application
-	Version     string
+	Version     string = "1.0.0"
 	ServerName  string = "im.logic"
 	flagconf    string
 	ServerID, _ = os.Hostname()
@@ -36,7 +35,7 @@ func init() {
 
 func main() {
 	flag.Parse()
-	ServerID = uuid.New().String()
+	//ServerID = uuid.New().String()
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	if err := conf.Init(flagconf); err != nil {
 		panic(err)
@@ -46,6 +45,7 @@ func main() {
 
 	ctx := context.Background()
 	logicRPC := logic.NewLogic(conf.Conf)
+
 	gracefulShutdown(
 		ctx,
 		logic.NewLogicService(
@@ -74,6 +74,7 @@ func gracefulShutdown(ctx context.Context, rpcSrv *bgrpc.Service, logicRPC model
 	instance := &register.ServiceInstance{
 		ID:       ServerID,
 		Name:     ServerName,
+		Version:  Version,
 		LastTs:   time.Now().Unix(),
 		Metadata: make(map[string]string),
 		Endpoints: []string{
@@ -91,10 +92,10 @@ func gracefulShutdown(ctx context.Context, rpcSrv *bgrpc.Service, logicRPC model
 	}()
 
 	go func() {
+		logger.Logger.Info("Grpc Service Success")
 		if err := rpcSrv.Start(ctx); err != nil {
 			logger.Logger.Fatal("rpc server start :%s \n", zap.Error(err))
 		}
-		logger.Logger.Info("Grpc Service Success")
 	}()
 	go func() {
 		logicRPC.SetReplicant(ctx, "im.gateway")
@@ -107,11 +108,11 @@ func gracefulShutdown(ctx context.Context, rpcSrv *bgrpc.Service, logicRPC model
 		5*time.Second,
 	)
 	defer func() {
-		rpcSrv.Stop(ctx)
+		_ = rpcSrv.Stop(ctx)
 		cancel()
 		stop()
 		//关闭服务
-		discovery.Close()
+		_ = discovery.Close()
 		// 注销当前在consul 保存服务数据
 		_ = discovery.Deregister(ctx, instance)
 	}()

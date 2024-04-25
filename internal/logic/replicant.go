@@ -12,6 +12,8 @@ import (
 	"github.com/yanglunara/discovery/builder"
 	"github.com/yanglunara/discovery/register"
 	"github.com/yanglunara/im/internal/model"
+	"github.com/yunbaifan/pkg/logger"
+	"go.uber.org/zap"
 )
 
 var (
@@ -30,19 +32,33 @@ type replicant struct {
 	nodesMutex  sync.Mutex
 	nodes       map[string]*weighted
 	totalWeight int64
+	server      model.ServerInter
+	roomCount   map[string]int32
 }
 
-func newReplicant(endpoint, serviceName string) model.Replicant {
+func newReplicant(server model.ServerInter, endpoint, serviceName string) model.Replicant {
 	r := &replicant{
 		onLineTick: time.Second * 5,
 		discovery:  builder.NewConsulDiscovery(endpoint),
+		server:     server,
+		roomCount:  make(map[string]int32),
 	}
 	// 初始化
 	r.event = make(chan []*register.ServiceInstance, 1)
 
 	_ = r.initNodes(context.Background(), serviceName)
 	r.serviceName = serviceName
-
+	_ = r.loadOnline()
+	go func() {
+		timeTick := time.NewTicker(10 * time.Second)
+		defer timeTick.Stop()
+		for {
+			select {
+			case <-timeTick.C:
+				_ = r.loadOnline()
+			}
+		}
+	}()
 	return r
 }
 
@@ -80,6 +96,7 @@ func (r *replicant) initNodes(_ context.Context, serviceName string) register.Wa
 	}
 	// 启动监控
 	go r.OnlineProc(nctx)
+
 	go func() {
 		timeTick := time.NewTicker(5 * time.Second)
 		defer timeTick.Stop()
@@ -139,12 +156,12 @@ func (r *replicant) LoadBalancerUpdate(ins []*register.ServiceInstance) {
 					}
 				}
 			}
-			nodes[in.Name] = &weighted{
+			nodes[in.ID] = &weighted{
 				updated:      in.LastTs,
 				fixedWeight:  weight,
 				currentConns: conns,
 				addres:       addrs,
-				hostName:     in.Name,
+				hostName:     in.ID,
 			}
 			totalConns += conns
 			totalWeight += weight
@@ -222,4 +239,32 @@ func (r *replicant) NodeAddrs(region, domain string, regionWeight float64) (doma
 		addrs = append(addrs, n.addres)
 	}
 	return
+}
+
+func (r *replicant) loadOnline() (err error) {
+	var (
+		roomCount = make(map[string]int32)
+	)
+	for _, server := range r.nodes {
+		var online *model.Online
+		logger.Logger.Info("loadOnline", zap.Any("hostName", server.hostName))
+		online, err = r.server.GetRedis().ServerOnline(context.Background(), server.hostName)
+		if err != nil {
+			return
+		}
+		if time.Since(time.Unix(online.Updated, 0)) > (time.Minute * 5) {
+			_ = r.server.GetRedis().DelServerOnline(context.Background(), server.hostName)
+			continue
+		}
+		for roomID, count := range online.RoomCount {
+			roomCount[roomID] += count
+		}
+	}
+	logger.Logger.Info("loadOnline", zap.Any("map", roomCount))
+	r.roomCount = roomCount
+	return nil
+}
+
+func (r *replicant) GetRoomCount() map[string]int32 {
+	return r.roomCount
 }
